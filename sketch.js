@@ -457,7 +457,7 @@ function saveXML() {
 
     let xmlText = '<?xml version="1.0" encoding="utf-8"?>' + newXML.serialize();
 
-    const blob = new Blob([xmlText], { type: "text/xml" });
+    const blob = new Blob([xmlText], { type: "application/octet-stream" });
 
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
