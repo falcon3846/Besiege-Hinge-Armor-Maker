@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="jp">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Hinge Armor</title>
+        <script src="https://cdn.jsdelivr.net/npm/p5@1.11.11/lib/p5.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
+        <script src="sketch.js"></script>
+        <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .controls{
+            margin-top:10px;
+            display:flex;
+            justify-content:center;
+            gap:20px;   /* 要素の間隔 */
+            flex-wrap:wrap;
+        }
+        .controls input{
+            width:120px;
+        }
+
+        button{
+            padding:5px 10px;
+        }
+        </style>
+    </head>
+    <body>
+        <div class="controls">
+            <div>x(t): <input id="inputX" value="t-sin(t)"></div>
+            <div>y(t): <input id="inputY" value="1-cos(t)"></div>
+            <div>tMin: <input id="inputTMin" value="0"></div>
+            <div>tMax: <input id="inputTMax" value="2*pi"></div>
+            <div>number of hinge: <input id="inputNum" value="8"></div>
+            <div><button onclick="updateFunction()">描画</button></div>
+            <div><button onclick="saveXML()">BSG保存</button></div>
+        </div>
+    </body>
+</html>

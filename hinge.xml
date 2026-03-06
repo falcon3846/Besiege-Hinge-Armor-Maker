@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Block id="5" guid="c8fb6732-4ae5-4f7d-abc2-2c1f2a5c6920">
+    <Transform>
+        <Position x="0" y="0" z="0" />
+        <Rotation x="0" y="0" z="0" w="1" />
+        <Scale x="1" y="1" z="1" />
+    </Transform>
+    <Data />
+</Block>
