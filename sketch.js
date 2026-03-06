@@ -316,33 +316,22 @@ function searchNextPoint(a){
   return alpha;
 }
 
-function searchClosestPoint(p){
-    let q;
-    let qX;
-    let qY;
+function searchClosestPoint(p,t){
     let d = Number.MAX_SAFE_INTEGER;
-    for(let n = 0; n < 100; n ++){
-        q = tMin + n*(tMax-tMin)/100;
+    let t2 = searchNextPoint(t);
 
-        qX = xx(q);
-        qY = yy(q);
-        if((p.x-qX)**2 + (p.y+qY)**2> d){
-            break;
-        }
-        d = (p.x-qX)**2 + (p.y+qY)**2;
-    }
+    let min = 2*t-t2;
+    let max = t2;
 
-    let min = q - (tMax-tMin)/100;
-    let max = q;
+    // stroke(255,0,0);
+    // strokeWeight(5);
+    // point(scale*xx(max),-scale*yy(max));
+    // stroke(0,255,0);
+    // point(scale*xx(min),-scale*yy(min));
+
     let alpha;
     let beta;
     for(let m = 0; m < 100; m ++){
-
-        // stroke(255,0,0);
-        // strokeWeight(5);
-        // point(scale*xx(max),-scale*yy(max));
-        // stroke(0,255,0);
-        // point(scale*xx(min),-scale*yy(min));
 
         alpha = (max-min)*0.25+min;
         beta = (max-min)*0.75+min;
@@ -394,7 +383,7 @@ function chainHinge(){
         nt = searchNextPoint(nt);
 
         let angle =
-        (Math.atan2(-yy(nt) - preHinge.getRightPos().y,
+        wrapAngle(Math.atan2(-yy(nt) - preHinge.getRightPos().y,
                     xx(nt) - preHinge.getRightPos().x)
         -preHinge.rotation);
 
@@ -403,13 +392,13 @@ function chainHinge(){
         for(let m = 0; m < 3; m++){
 
             let angle =
-            (Math.atan2(-yy(nt) - hinges[n].getLeftPos().y,
+            wrapAngle(Math.atan2(-yy(nt) - hinges[n].getLeftPos().y,
                         xx(nt) - hinges[n].getLeftPos().x)
             -preHinge.rotation);
 
             hinges[n].setBeside(preHinge,angle);
 
-            nt = searchClosestPoint(hinges[n].getRightPos());
+            nt = searchClosestPoint(hinges[n].getRightPos(),nt);
 
         }
 
@@ -419,6 +408,10 @@ function chainHinge(){
         hinges[n].drawHinge();
     }
 
+}
+
+function wrapAngle(theta) {
+  return ((theta + Math.PI) % (2 * Math.PI) + (2 * Math.PI)) % (2 * Math.PI) - Math.PI;
 }
 
 function xx(c){
