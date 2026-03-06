@@ -2,6 +2,8 @@ let scale = 80;
 let cameraX;
 let cameraY;
 let cameraSpeed;
+let preMX;
+let preMY;
 
 let margin = 0;
 
@@ -28,8 +30,8 @@ function setup(){
   createCanvas(windowWidth, windowHeight);
   updateFunction();
   
-  cameraX = width * (-0.5);
-  cameraY = height * (-0.5);
+  cameraX = width * (0.5);
+  cameraY = height * (0.5);
   cameraSpeed = 0.1 * scale;
 
   baseHinge = new Hinge();
@@ -41,20 +43,48 @@ function windowResized(){
 
 function draw(){
 
-
-  if (keyIsDown(87)) cameraY -= cameraSpeed; // W
-  if (keyIsDown(65)) cameraX -= cameraSpeed; // A
-  if (keyIsDown(83)) cameraY += cameraSpeed; // S
-  if (keyIsDown(68)) cameraX += cameraSpeed; // D
-
   background(0);
-  translate(-cameraX,-cameraY);
+  translate(cameraX,cameraY);
 
   drawGraph();
 
   chainHinge();
 
 
+}
+
+function mousePressed() {
+  preMX = mouseX;
+  preMY = mouseY;
+}
+
+function mouseDragged() {
+  let dx = mouseX - preMX;
+  let dy = mouseY - preMY;
+
+  cameraX += dx;
+  cameraY += dy;
+
+  preMX = mouseX;
+  preMY = mouseY;
+}
+
+function touchStarted() {
+  preMX = mouseX;
+  preMY = mouseY;
+}
+
+function touchMoved() {
+  let dx = mouseX - preMX;
+  let dy = mouseY - preMY;
+
+  cameraX += dx;
+  cameraY += dy;
+
+  preMX = mouseX;
+  preMY = mouseY;
+
+  return false;
 }
 
 class Hinge{
