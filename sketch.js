@@ -424,17 +424,24 @@ function yy(c){
 function makeData(){
     newXML = new p5.XML(tempXML.DOM.cloneNode(true));
     let blockXML = newXML.getChild("Blocks");
-    for(let n = 0; n < num; n ++){
+    let hingeObject;
+    for(let n = -1; n < num; n ++){
+
+        if(n == -1){
+            hingeObject = baseHinge;
+        }else{
+            hingeObject = hinges[n];
+        }
         
         let hingeBlock = new p5.XML(hingeXML.DOM.cloneNode(true));
         hingeBlock.setAttribute("guid", crypto.randomUUID());
         let hingeTrans = hingeBlock.getChild("Transform");
-        hingeTrans.getChild("Position").setAttribute("x", hinges[n].getBasePos().x);
-        hingeTrans.getChild("Position").setAttribute("y", -hinges[n].getBasePos().y);
+        hingeTrans.getChild("Position").setAttribute("x", hingeObject.getBasePos().x);
+        hingeTrans.getChild("Position").setAttribute("y", -hingeObject.getBasePos().y);
         hingeTrans.getChild("Position").setAttribute("z", 0);
 
         let hingeRot = hingeTrans.getChild("Rotation");
-        let theta = hinges[n].rotation;
+        let theta = hingeObject.rotation;
         hingeRot.setAttribute("x", -cos(theta/2)/2**0.5);
         hingeRot.setAttribute("y", sin(theta/2)/2**0.5);
         hingeRot.setAttribute("z", -sin(theta/2)/2**0.5);
