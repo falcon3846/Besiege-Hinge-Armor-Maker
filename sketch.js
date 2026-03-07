@@ -1,7 +1,7 @@
 let scale = 80;
 let cameraX;
 let cameraY;
-let cameraSpeed;
+
 let preMX;
 let preMY;
 
@@ -32,13 +32,17 @@ function setup(){
   
   cameraX = width * (0.5);
   cameraY = height * (0.5);
-  cameraSpeed = 0.1 * scale;
+
+  scale = (width*height)**0.5/10;
+  graphCenter();
 
   baseHinge = new Hinge();
 }
 
 function windowResized(){
   resizeCanvas(windowWidth, windowHeight);
+  scale = (width*height)**0.5/10;
+  graphCenter();
 }
 
 function draw(){
@@ -244,6 +248,7 @@ function updateFunction() {
   } catch (e) {
     alert("tの範囲、個数にエラーがあります");
   }
+  graphCenter();
 }
 
 function drawGraph(){
@@ -466,4 +471,23 @@ function saveXML() {
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
+}
+
+function graphCenter() {
+    let minX = Number.MAX_SAFE_INTEGER;
+    let minY = Number.MAX_SAFE_INTEGER;
+    let maxX = -Number.MAX_SAFE_INTEGER;
+    let maxY = -Number.MAX_SAFE_INTEGER;
+    let s;
+    for(let n = 0; n < 100; n ++){
+        s = tMin + (tMax-tMin)/100*n;
+        if(xx(s) > maxX){ maxX = xx(s);}
+        if(yy(s) > maxY){ maxY = yy(s);}
+        if(xx(s) < minX){ minX = xx(s);}
+        if(yy(s) < minY){ minY = yy(s);}
+    }
+    
+    cameraX = width/2-(minX+maxX)/2*scale;
+    cameraY = height/2+(minY+maxY)/2*scale;
+
 }
